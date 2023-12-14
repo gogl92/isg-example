@@ -71,3 +71,8 @@ export default defineComponent({
   }
 });
 </script>
+<style>
+.list-group-item {
+  cursor: pointer;
+}
+</style>
