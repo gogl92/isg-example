@@ -19,7 +19,8 @@
       </li>
     </ul>
     <p>Total: ${{ totalInCart }}</p>
-    <router-link to="/checkout" class="btn btn-success">Go to Checkout</router-link>
+    <!-- Hide the checkout button if the cart is empty or the current route is checkout -->
+    <router-link v-if="cart.length > 0 && $route.name !== 'checkout'" to="/checkout" class="btn btn-success">Go to Checkout</router-link>
   </div>
 </template>
 
