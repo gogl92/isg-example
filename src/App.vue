@@ -1,0 +1,65 @@
+<template>
+  <div id="app">
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+      <div class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <router-link to="/" class="navbar-brand">Home</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to="/products" class="nav-link">Products</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to="/cart" class="nav-link">Cart</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to="/checkout" class="nav-link">Checkout</router-link>
+        </li>
+        <li class="nav-item">
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search products"
+              v-model="search_text"
+              @keyup.enter="search"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                @click="search"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </li>
+      </div>
+    </nav>
+
+    <div class="container mt-3">
+      <router-view />
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  name: "App",
+  data() {
+    return {
+      search_text: this.$route.query.search_text || ""
+    };
+  },
+  methods: {
+    search() {
+      this.$router.push({
+        name: "search-results",
+        query: { search_text: this.search_text }
+      });
+    }
+  }
+});
+</script>
