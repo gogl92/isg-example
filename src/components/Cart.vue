@@ -19,6 +19,7 @@
       </li>
     </ul>
     <p>Total: ${{ totalInCart }}</p>
+    <router-link to="/checkout" class="btn btn-success">Go to Checkout</router-link>
   </div>
 </template>
 
