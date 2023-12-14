@@ -80,7 +80,9 @@ export default defineComponent({
 
       window.dispatchEvent(new CustomEvent('cart-changed', {
         detail: {
-          storage: JSON.parse(localStorage.getItem('cart') ?? '{}')?.length || 0
+          storage: JSON.parse(localStorage.getItem('cart') ?? '{}')?.reduce((total: number, product: Product) => {
+            return total + (product.quantity? product.quantity : 1);
+          }, 0) || 0
         }
       }));
 
@@ -110,7 +112,9 @@ export default defineComponent({
 
       window.dispatchEvent(new CustomEvent('cart-changed', {
         detail: {
-          storage: JSON.parse(localStorage.getItem('cart') ?? '{}')?.length || 0
+          storage: JSON.parse(localStorage.getItem('cart') ?? '{}')?.reduce((total: number, product: Product) => {
+            return total + (product.quantity? product.quantity : 1);
+          }, 0) || 0
         }
       }));
     },

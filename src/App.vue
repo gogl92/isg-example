@@ -45,16 +45,25 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import Product from "@/types/Product";
 
 export default defineComponent({
   name: "App",
   data() {
     return {
       search_text: this.$route.query.search_text || "",
-      cart_count: JSON.parse(localStorage.getItem('cart') ?? '{}')?.length || 0
+      cart_count:  0
     };
   },
   mounted() {
+    if(localStorage.getItem('cart') == null) {
+      localStorage.setItem('cart', JSON.stringify([]));
+    }
+
+    this.cart_count = JSON.parse(localStorage.getItem('cart') ?? '{}')?.reduce((total: number, product: Product) => {
+      return total + (product.quantity? product.quantity : 1);
+    }, 0) || 0;
+
     window.addEventListener('cart-changed', (event) => {
       console.log('cart-changed', event);
       //@ts-expect-error custom event
