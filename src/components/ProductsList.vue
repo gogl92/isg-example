@@ -4,6 +4,8 @@
       <ProductsPaginated :products="products" :productSelected="productSelected"/>
       <button class="btn btn-primary" @click="retrieveProducts('left')"> ◀️ </button>
       <button class="btn btn-primary" @click="retrieveProducts('right')"> ▶️ </button>
+      <router-link to="/cart" class="btn btn-primary">Go to cart</router-link>
+      <router-link to="/checkout" class="btn btn-primary">Checkout</router-link>
     </div>
     <div class="col-md-6">
       <product-details-component
