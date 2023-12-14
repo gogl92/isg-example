@@ -78,7 +78,7 @@
 import { defineComponent, ref } from "vue";
 import CartComponent from "@/components/Cart.vue";
 import router from "@/router";
-import Swal from "sweetalert2"; // Ensure you have router set up
+import Swal from "sweetalert2";
 
 export default defineComponent({
   name: "checkout-component",
@@ -125,6 +125,7 @@ export default defineComponent({
       router.push("/order-summary");
     },
     validateForm() {
+      this.missingFields = [];
 
       if (!localStorage.getItem("cart")) {
         this.missingFields.push("Cart is empty");
@@ -132,20 +133,51 @@ export default defineComponent({
         return false;
       }
 
-      if (this.paymentMethod === "Credit Card" && (!this.creditCardNumber || !this.expirationDate || !this.cvv)) {
-        this.missingFields.push("Credit card details are missing");
+      if (this.paymentMethod === "Credit Card") {
+        // Validate credit card details
+        if (!this.creditCardNumber) {
+          this.missingFields.push("Credit card number is missing");
+        } else if (this.creditCardNumber.length !== 16) {
+          this.missingFields.push("Credit card number is invalid");
+        }
 
-        return false;
+        // Validate expiration date is later than today
+        if (!this.expirationDate) {
+          this.missingFields.push("Expiration date is missing");
+        } else if (!this.validateCreditCardDAte(this.expirationDate)) {
+            this.missingFields.push("Expiration date is invalid");
+        }
+
+        // Validate CVV
+        if (!this.cvv) {
+          this.missingFields.push("CVV is missing");
+        } else if (this.cvv.length !== 3) {
+          this.missingFields.push("CVV is invalid");
+        }
       }
 
-      if (!this.firstName || this.lastName || this.email || this.password || this.phone || this.address) {
+      if (!this.firstName || !this.lastName || !this.email || !this.password || !this.phone || !this.address) {
         this.missingFields.push("Personal details are missing");
       }
 
-      return this.firstName && this.lastName && this.email && this.password && this.phone && this.address;
+      return this.missingFields.length === 0;
     },
     togglePaymentDetails() {
       // Logic to show/hide credit card details
+    },
+    validateCreditCardDAte(dateString: string) {
+      const dateRegex = /^(0[1-9]|1[0-2])\/(\d{2})$/;
+      if (!dateRegex.test(dateString)) {
+        return false;
+      }
+
+      const [inputMonth, inputYear] = dateString.split('/');
+      const currentYear = new Date().getFullYear() % 100;
+      const currentMonth = new Date().getMonth() + 1;
+      const month = parseInt(inputMonth, 10);
+      const year = parseInt(inputYear, 10);
+
+      return year > currentYear || year === currentYear && month >= currentMonth;
     }
   }
 });
