@@ -48,15 +48,15 @@
       <div class="form-group payment-details" v-if="paymentMethod === 'Credit Card'">
         <div>
           <label>Card Number:</label>
-          <input type="text" class="form-control" />
+          <input v-model="creditCardNumber" type="text" class="form-control" />
         </div>
         <div>
           <label>Expiration Date:</label>
-          <input type="text" class="form-control" />
+          <input v-model="expirationDate" type="text" class="form-control" />
         </div>
         <div>
           <label>CVV:</label>
-          <input type="text" class="form-control" />
+          <input v-model="cvv" type="text" class="form-control" />
         </div>
       </div>
 
@@ -91,7 +91,11 @@ export default defineComponent({
       email: ref(""),
       password: ref(""),
       phone: ref(""),
-      address: ref("")
+      address: ref(""),
+      creditCardNumber: ref(""),
+      expirationDate: ref(""),
+      cvv: ref(""),
+      missingFields: [] as string[]
     };
   },
   methods: {
@@ -99,7 +103,7 @@ export default defineComponent({
       if (!this.validateForm()) {
         Swal.fire({
           title: "Error!",
-          text: "Please fill out all fields",
+          text: "Please fix the issues: " + this.missingFields.join(", "),
           icon: "error",
           confirmButtonText: "Ok"
         });
@@ -121,10 +125,23 @@ export default defineComponent({
       router.push("/order-summary");
     },
     validateForm() {
+
       if (!localStorage.getItem("cart")) {
+        this.missingFields.push("Cart is empty");
+
         return false;
       }
-      console.log(this.firstName, this.lastName, this.email, this.password, this.phone, this.address);
+
+      if (this.paymentMethod === "Credit Card" && (!this.creditCardNumber || !this.expirationDate || !this.cvv)) {
+        this.missingFields.push("Credit card details are missing");
+
+        return false;
+      }
+
+      if (!this.firstName || this.lastName || this.email || this.password || this.phone || this.address) {
+        this.missingFields.push("Personal details are missing");
+      }
+
       return this.firstName && this.lastName && this.email && this.password && this.phone && this.address;
     },
     togglePaymentDetails() {
