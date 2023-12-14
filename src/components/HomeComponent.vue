@@ -1,21 +1,24 @@
 <template>
   <!-- add a gray background color and some padding to the footer -->
   <div class="home">
-    <img width="567" height="567" alt="Vue logo" src="../assets/logo.png" />
-  </div>
-  <div class="list">
-    <h3 class="center-content">Home</h3>
-    <ul class="center-content">
-      <li>
-        <router-link to="/products">Products</router-link>
-      </li>
-      <li>
-        <router-link to="/cart">Cart</router-link>
-      </li>
-      <li>
-        <router-link to="/checkout">Checkout</router-link>
-      </li>
-    </ul>
+    <div class="center-content">
+      <img width="567" height="567" alt="Vue logo" src="../assets/logo.png" />
+    </div>
+
+    <div class="list">
+      <h3 class="center-content">Home</h3>
+      <ul class="center-content">
+        <li>
+          <router-link to="/products"><div class="btn btn-primary">Products</div> </router-link>
+        </li>
+        <li>
+          <router-link to="/cart"><div class="btn btn-primary">Cart</div></router-link>
+        </li>
+        <li>
+          <router-link to="/checkout"><div class="btn btn-primary">Checkout</div></router-link>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 

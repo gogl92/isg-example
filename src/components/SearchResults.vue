@@ -89,7 +89,7 @@ export default defineComponent({
 <style>
 .list {
   text-align: left;
-  max-width: 750px;
+  width: 80%;
   margin: auto;
 }
 </style>

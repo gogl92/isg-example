@@ -6,7 +6,6 @@
       <li v-for="product in cart" :key="product.id">
         <div>
           {{ product.quantity }} x {{ product.title }} - ${{ product.price }}
-          <!-- TODO: add a button to view the details of the product -->
           <div class="btn btn-primary" @click="viewProduct(product)">
             View Product
           </div>
@@ -100,7 +99,7 @@ export default defineComponent({
 <style>
 .list {
   text-align: left;
-  max-width: 750px;
+  width: 80%;
   margin: auto;
 }
 </style>

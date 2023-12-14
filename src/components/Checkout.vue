@@ -121,6 +121,9 @@ export default defineComponent({
       router.push("/order-summary");
     },
     validateForm() {
+      if (!localStorage.getItem("cart")) {
+        return false;
+      }
       console.log(this.firstName, this.lastName, this.email, this.password, this.phone, this.address);
       return this.firstName && this.lastName && this.email && this.password && this.phone && this.address;
     },

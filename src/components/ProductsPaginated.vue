@@ -1,7 +1,6 @@
 <template>
   <h4>Products List</h4>
   <ul class="list-group">
-    <!-- TODO: Add pagination -->
     <li
       class="list-group-item"
       :class="{ active: index == currentIndex }"
