@@ -29,7 +29,6 @@
 
   <div v-else>
     <br />
-    <p>Please click on a Product...</p>
   </div>
 </template>
 

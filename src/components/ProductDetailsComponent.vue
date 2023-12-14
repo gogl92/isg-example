@@ -131,8 +131,8 @@ export default defineComponent({
 
 <template>
   <div class="col-md-6">
-    <h4>Product</h4>
-    <div v-if="product">
+    <div v-if="product.id">
+      <h4>Product</h4>
       <div>
         <label><strong>Title:</strong></label> {{ product.title }}
       </div>
@@ -160,7 +160,6 @@ export default defineComponent({
     </div>
     <div v-else>
       <br />
-      <p>Invalid Product</p>
     </div>
   </div>
 </template>
