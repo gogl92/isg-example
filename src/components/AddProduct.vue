@@ -69,6 +69,12 @@ export default defineComponent({
         .catch((e: Error) => {
           console.log(e);
         });
+
+      window.dispatchEvent(new CustomEvent('cart-changed', {
+        detail: {
+          storage: JSON.parse(localStorage.getItem('cart') ?? '{}')?.length || 0
+        }
+      }));
     },
 
     newProduct() {

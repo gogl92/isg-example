@@ -91,6 +91,12 @@ export default defineComponent({
         },
         allowOutsideClick: () => !Swal.isLoading(),
       });
+
+      window.dispatchEvent(new CustomEvent('cart-changed', {
+        detail: {
+          storage: JSON.parse(localStorage.getItem('cart') ?? '{}')?.length || 0
+        }
+      }));
     }
   }
 });

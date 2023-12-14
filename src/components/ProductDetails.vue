@@ -79,6 +79,12 @@ export default defineComponent({
         localStorage.setItem("cart", JSON.stringify([product]));
       }
 
+      window.dispatchEvent(new CustomEvent('cart-changed', {
+        detail: {
+          storage: JSON.parse(localStorage.getItem('cart') ?? '{}')?.length || 0
+        }
+      }));
+
       const productInCart = cartArray.find((p: Product) => p.id === product?.id);
       this.isProductInCart = !!productInCart;
 
@@ -102,6 +108,12 @@ export default defineComponent({
         localStorage.setItem("cart", JSON.stringify(newCart));
         this.isProductInCart = false;
       }
+
+      window.dispatchEvent(new CustomEvent('cart-changed', {
+        detail: {
+          storage: JSON.parse(localStorage.getItem('cart') ?? '{}')?.length || 0
+        }
+      }));
     },
   },
   mounted() {

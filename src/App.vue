@@ -9,7 +9,7 @@
           <router-link to="/products" class="nav-link">Products</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/cart" class="nav-link">Cart</router-link>
+          <router-link to="/cart" class="nav-link">Cart ({{cart_count}})</router-link>
         </li>
         <li class="nav-item">
           <router-link to="/checkout" class="nav-link">Checkout</router-link>
@@ -50,8 +50,16 @@ export default defineComponent({
   name: "App",
   data() {
     return {
-      search_text: this.$route.query.search_text || ""
+      search_text: this.$route.query.search_text || "",
+      cart_count: JSON.parse(localStorage.getItem('cart') ?? '{}')?.length || 0
     };
+  },
+  mounted() {
+    window.addEventListener('cart-changed', (event) => {
+      console.log('cart-changed', event);
+      //@ts-expect-error custom event
+      this.cart_count = event.detail.storage;
+    });
   },
   methods: {
     search() {
