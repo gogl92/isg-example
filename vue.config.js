@@ -1,5 +1,6 @@
 module.exports = {
   devServer: {
-    port: 8081,
+    allowedHosts: ['test11.isgengine.com'],
+    port: 3000,
   },
 };
